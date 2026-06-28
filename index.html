@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GALÁN — Luxury Scent</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Barlow+Condensed:wght@300;400;500;600&family=Barlow:wght@300;400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:    #100D0A;
+  --bark:     #1E1810;
+  --leather:  #3D2B1A;
+  --rust:     #8B4A2A;
+  --bronze:   #C9A96E;
+  --sand:     #E8D5A3;
+  --parchment:#E8DDD0;
+  --ash:      #8C8077;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--parchment);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 22px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  mix-blend-mode: normal;
+}
+
+nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(16,13,10,0.95) 0%, transparent 100%);
+  z-index: -1;
+}
+
+.nav-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.55em;
+  color: var(--sand);
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.nav-links a:hover { color: var(--sand); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 80px 0;
+  overflow: hidden;
+}
+
+/* Woodgrain texture bands */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      178deg,
+      transparent 0px,
+      transparent 18px,
+      rgba(61,43,26,0.18) 18px,
+      rgba(61,43,26,0.18) 19px
+    ),
+    repeating-linear-gradient(
+      182deg,
+      transparent 0px,
+      transparent 34px,
+      rgba(30,24,16,0.22) 34px,
+      rgba(30,24,16,0.22) 36px
+    ),
+    repeating-linear-gradient(
+      179deg,
+      transparent 0px,
+      transparent 55px,
+      rgba(61,43,26,0.1) 55px,
+      rgba(61,43,26,0.1) 57px
+    );
+  z-index: 0;
+}
+
+/* Smoked vignette */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(122,59,30,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 100% 50% at 50% 0%, rgba(16,13,10,0.9) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(16,13,10,0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 100% 50%, rgba(16,13,10,0.6) 0%, transparent 60%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 48px;
+}
+
+/* The big stamped logo */
+.hero-stamp {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: clamp(100px, 22vw, 260px);
+  letter-spacing: -0.01em;
+  line-height: 0.85;
+  text-transform: uppercase;
+  color: var(--parchment);
+  position: relative;
+  display: inline-block;
+  /* Ink stamp imperfection */
+  text-shadow:
+    1px 0px 0px rgba(196,168,130,0.4),
+    -1px 1px 0px rgba(16,13,10,0.6),
+    2px -1px 0px rgba(196,168,130,0.15);
+  -webkit-text-stroke: 0.5px rgba(196,168,130,0.2);
+  margin-bottom: 4px;
+}
+
+.hero-accent-line {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.hero-rule {
+  height: 1px;
+  width: 80px;
+  background: var(--bronze);
+  opacity: 0.6;
+}
+
+.hero-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.hero-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2.5vw, 24px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ash);
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  text-decoration: none;
+  border-bottom: 1px solid var(--bronze);
+  padding-bottom: 6px;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.hero-cta:hover { color: var(--sand); border-color: var(--sand); }
+.hero-cta::after { content: '→'; font-size: 14px; }
+
+/* Scroll indicator */
+.scroll-line {
+  position: absolute;
+  right: 48px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+.scroll-line span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--ash);
+  writing-mode: vertical-rl;
+}
+
+.scroll-line::after {
+  content: '';
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--bronze), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--bark);
+  padding: 80px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+}
+
+.about-strip::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--bronze), transparent);
+  opacity: 0.4;
+}
+
+.about-word {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  font-style: italic;
+  color: var(--leather);
+  line-height: 1;
+  -webkit-text-stroke: 1px rgba(160,98,42,0.3);
+  user-select: none;
+}
+
+.about-text-block {}
+
+.about-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  margin-bottom: 24px;
+}
+
+.about-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--parchment);
+  margin-bottom: 20px;
+}
+
+.about-body {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+}
+
+/* ── SCENT LINES ── */
+.lines-section {
+  padding: 100px 48px;
+  background: var(--black);
+  position: relative;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 64px;
+  border-bottom: 1px solid rgba(160,98,42,0.2);
+  padding-bottom: 24px;
+}
+
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.section-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ash);
+}
+
+.lines-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.line-card {
+  background: var(--bark);
+  padding: 48px 32px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.4s;
+}
+
+.line-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.line-card:hover { background: var(--leather); }
+.line-card:hover::before { transform: scaleX(1); }
+
+.line-bg-letter {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 120px;
+  font-weight: 600;
+  color: rgba(30,24,16,0.8);
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.4s;
+}
+
+.line-card:hover .line-bg-letter { color: rgba(61,43,26,0.6); }
+
+.line-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--parchment);
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.line-spanish {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.line-desc {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--ash);
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.line-price {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--sand);
+  position: relative;
+}
+
+/* ── STORY SECTION ── */
+.story-section {
+  background: var(--leather);
+  padding: 100px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.story-section::before {
+  content: 'GALÁN';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(100px, 25vw, 300px);
+  font-weight: 600;
+  color: rgba(30,24,16,0.35);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.story-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--parchment);
+  margin-bottom: 32px;
+}
+
+.story-quote em {
+  color: var(--sand);
+  font-style: normal;
+}
+
+.story-attr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--bark);
+  padding: 100px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-left {}
+
+.contact-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--parchment);
+  margin-bottom: 24px;
+}
+
+.contact-body {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ash);
+  margin-bottom: 40px;
+}
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ci-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.ci-value {
+  font-size: 14px;
+  color: var(--sand);
+  letter-spacing: 0.08em;
+}
+
+/* Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  background: rgba(16,13,10,0.8);
+  border: 1px solid rgba(160,98,42,0.25);
+  padding: 14px 18px;
+  color: var(--parchment);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 100%;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--bronze);
+}
+
+.form-textarea { min-height: 120px; resize: vertical; }
+
+.form-select option { background: var(--bark); }
+
+.form-submit {
+  background: var(--rust);
+  border: none;
+  padding: 18px 36px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--parchment);
+  cursor: pointer;
+  transition: background 0.3s;
+  align-self: flex-start;
+}
+
+.form-submit:hover { background: var(--bronze); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(160,98,42,0.15);
+}
+
+.footer-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.55em;
+  color: var(--ash);
+  text-transform: uppercase;
+}
+
+.footer-copy {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: rgba(140,128,119,0.4);
+  text-transform: uppercase;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.footer-links a:hover { opacity: 1; }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px; }
+  .scroll-line { display: none; }
+  .about-strip { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+  .about-word { font-size: 64px; }
+  .lines-section { padding: 60px 24px; }
+  .lines-grid { grid-template-columns: 1fr 1fr; }
+  .story-section { padding: 80px 24px; }
+  .contact-section { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
+  footer { flex-direction: column; gap: 20px; text-align: center; padding: 36px 24px; }
+  .footer-links { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .lines-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-mark">Galán</div>
+  <ul class="nav-links">
+    <li><a href="#lines">The Lines</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#contact">Inquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-vignette"></div>
+
+  <div class="hero-content">
+    <div class="hero-stamp">GALÁN</div>
+    <div class="hero-accent-line">
+      <div class="hero-rule"></div>
+      <div class="hero-sub">Luxury Scent &nbsp;·&nbsp; Minneapolis, MN</div>
+    </div>
+    <div class="hero-tagline">
+      Scent is presence. It enters before you do<br>and lingers long after you leave.
+    </div>
+    <a href="#lines" class="hero-cta">Explore the Collection</a>
+  </div>
+
+  <div class="scroll-line">
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip reveal">
+  <div class="about-word">Galán</div>
+  <div class="about-text-block">
+    <div class="about-eyebrow">The Name</div>
+    <h2 class="about-headline">In Spanish, galán means<br>the gentleman.</h2>
+    <p class="about-body">
+      The one who commands a room before saying a word. 
+      The one whose presence is felt, not announced. 
+      We built this brand around that idea — that the spaces 
+      you inhabit are an extension of who you are. 
+      GALÁN curates the world's finest fragrances 
+      and brings them to the people and places worthy of them.
+    </p>
+  </div>
+</section>
+
+<!-- SCENT LINES -->
+<section class="lines-section" id="lines">
+  <div class="section-header reveal">
+    <div class="section-title">The Collection</div>
+    <div class="section-count">Four Lines. One Standard.</div>
+  </div>
+
+  <div class="lines-grid">
+    <div class="line-card reveal">
+      <div class="line-bg-letter">M</div>
+      <div class="line-name">Maison</div>
+      <div class="line-spanish">La Casa</div>
+      <div class="line-desc">Candles, reed diffusers, and room sprays curated for the home. Each scent chosen to transform a space, not just fill it.</div>
+      <div class="line-price">From $65</div>
+    </div>
+
+    <div class="line-card reveal">
+      <div class="line-bg-letter">C</div>
+      <div class="line-name">Le Cercle</div>
+      <div class="line-spanish">El Círculo</div>
+      <div class="line-desc">A monthly subscription for those who understand that a home has a scent season. Curated, shipped, and ready to experience.</div>
+      <div class="line-price">$75 / month</div>
+    </div>
+
+    <div class="line-card reveal">
+      <div class="line-bg-letter">R</div>
+      <div class="line-name">Reserve</div>
+      <div class="line-spanish">La Reserva</div>
+      <div class="line-desc">Luxury gift sets for the closing, the wedding, the moment that deserves more than a card. Something they will remember.</div>
+      <div class="line-price">From $120</div>
+    </div>
+
+    <div class="line-card reveal">
+      <div class="line-bg-letter">S</div>
+      <div class="line-name">Signature</div>
+      <div class="line-spanish">La Firma</div>
+      <div class="line-desc">A bespoke scent program for offices, hotels, boutiques, and spaces that understand the value of a first impression.</div>
+      <div class="line-price">From $350 / mo</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section" id="story">
+  <div class="story-inner reveal">
+    <div class="story-quote">
+      "We don't make scent.<br>
+      We find the <em>finest</em> in the world<br>
+      and bring it to you."
+    </div>
+    <div class="story-attr">Eloy Galán &nbsp;·&nbsp; Founder</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-left reveal">
+    <h2 class="contact-headline">Start a<br>Conversation.</h2>
+    <p class="contact-body">
+      Whether you're interested in a corporate scent program, a luxury gift order, or a subscription — reach out. Every GALÁN relationship starts with a conversation.
+    </p>
+    <div class="contact-detail">
+      <div class="contact-item">
+        <span class="ci-label">Email</span>
+        <span class="ci-value">hello@galanscent.com</span>
+      </div>
+      <div class="contact-item">
+        <span class="ci-label">Based In</span>
+        <span class="ci-value">Minneapolis, Minnesota</span>
+      </div>
+      <div class="contact-item">
+        <span class="ci-label">Response Time</span>
+        <span class="ci-value">Within 24 hours</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" placeholder="First and last name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">I'm Interested In</label>
+        <select class="form-select">
+          <option value="">Select a line</option>
+          <option>Maison — Home Collection</option>
+          <option>Le Cercle — Monthly Subscription</option>
+          <option>Reserve — Luxury Gift Sets</option>
+          <option>Signature — Corporate Scent Program</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell Us About Your Space</label>
+        <textarea class="form-textarea" placeholder="A few words about what you're looking for..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Inquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GALÁN &nbsp;·&nbsp; galanscent.com</div>
+  <div class="footer-copy">© 2026 Galán. Minneapolis, MN.</div>
+  <ul class="footer-links">
+    <li><a href="#lines">Collection</a></li>
+    <li><a href="#story">Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+  // Stagger line cards
+  document.querySelectorAll('.line-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.1}s`;
+  });
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = 'Message Sent.';
+    btn.style.background = '#4A7C5F';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
